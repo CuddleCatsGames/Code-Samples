@@ -308,3 +308,202 @@ screen book_():
         align (0.5, 0.85)
         textbutton "Previous" action SetScreenVariable("bookpage", max(0, bookpage - 1))
         textbutton "Next" action SetScreenVariable("bookpage", min(10, bookpage + 1))
+
+## This is a resource name loader that will import the names of files from certain folders
+## Intended as a way to quickly grab file names to use in accessibility.rpy, screens.rpy, and captiontool.rpy
+## Remember to add commas to the end of each listed item
+## As of RenPy7, basic images do not have to be defined (LayeredImages still need to be set up)
+init -1:
+    $ redefine_resources = False
+    ## When you add, delete or rename an image or music resource, change redefine_resources to True and launch the project
+
+
+## Sprites:
+#### Characters Claude images and stats####
+    define c = Character("Claude", image = "claude", color="#446CCF")
+    image c angryh = "side claude angryh.png"
+    image c angry = "side claude angry.png"
+    image c tired = "side claude tired.png"
+    image define c tiredh = "side claude tiredh.png"
+    image define c confused = "side claude confused.png"
+    image define c confusedh = "side claude confusedh.png"
+    image define c disgusted = "side claude disgusted.png"
+    image define c disgustedh = "side claude disgustedh.png"
+    image define c fierceh = "side claude fierceh.png"
+    image define c fierce = "side claude fierce.png"
+    image define c flirty = "side claude flirty.png"
+    image define c flirtyh = "side claude flirtyh.png"
+    image define c happy = "side claude happy.png"
+    image define c happyh = "side claude happyh.png"
+    image define c incredulous = "side claude incredulous.png"
+    image define c increduloush = "side claude increduloush.png"
+    image define c irritated = "side claude irritated.png"
+    image define c irritatedh = "side claude irritatedh.png"
+    image define c sad = "side claude sad.png"
+    image define c sadh = "side claude sadh.png"
+    image define c sarcastic = "side claude sarcastic.png"
+    image define c sarcastich = "side claude sarcastich.png"
+    image define c serious = "side claude serious.png"
+    image define c serioush = "side claude serioush.png"
+    default morality = 0
+    default charm = 0
+    default obsession = 0
+    default intelligence = 0
+    default authority = 0
+    default hedonism = 0
+
+#### Lover images and stats ####
+    define mc = Character("[mcn]", image = "mc", color="#B76E79")
+    image define mc happy = "side mc happy.png"
+    image define mc angry = "side mc angry.png"
+    image define mc confuse = "side mc confuse.png"
+    image define mc fear = "side mc fear.png"
+    image define mc flirty = "side mc flirty.png"
+    image define mc shocked = "side mc shocked.png"
+    image define mc worried = "side mc worried.png"
+    image define mc fierce = "side mc fierce.png"
+    image define mc sad = "side mc sad.png"
+    image define mc neutral = "side mc neutral.png"
+    image define mc serious = "side mc serious.png"
+    image define mc worried = "side mc worried.png"
+    default lover_love = 0
+    default mccorruption = 0
+    default mctrust = 0
+    default mcinnocence = 100
+    default lover_friendship = 0
+
+##### Rival
+    define r = Character("Robin", image = "robin", color="#e68c2c")
+    image define r happy = "side robin happy.png"
+    image define r confused = "side robin confused.png"
+    image define r smile = "side robin smile.ong"
+
+    ######### NPC #########
+    define capg = Character("Captain", image = "captain",)
+    image define capg normal = "side captain normal.png"
+    define p = Character("Jules", image = "jules",)
+    image define p normal = "side jules normal.png"
+    define y = Character(name = "Scribe's Son",)
+    define n = Character("Narattor",)
+    define nv = Character("", kind= nvl,)
+    define md = Character("Marie", image = "marie",)
+    image define md normal = ("side marie normal.png")
+    define kid1 = Character("Margot",)
+    define ml = Character("Marquis", image = "marquis",)
+    image define ml norm = "side marquis norm.png"
+
+
+## Music:
+# init -2 python:
+    define opening = "audio/music/opening.mp3"
+    define marked = "audio/music/marked.mp3"
+    define intro = "audio/music/intro.mp3"
+    define gregorian = "audio/music/gregorian.mp3"
+    define market = "audio/music/medieval faire.mp3"
+    define poj = "audio/music/Suonatore di Liuto.mp3"
+    define cosette = "audio/music/cosette.mp3" #####https://www.youtube.com/watch?v=VlNG0vBK88Y&t=30s
+    define obsessed = "audio/music/obsession.mp3"
+    define court = "audio/music/court.mp3" #####Foreboding Whispers
+
+
+
+#### Image fx###
+
+    define eyeopen = ImageDissolve("fx/eyeopen.png", 1.5, 100)
+    define eyeclose = ImageDissolve("fx/eyeopen.png", 1.5, 100, reverse=True)
+## Music Caption:
+    # Careless-Summer_Looping: _("")
+    # Future-Business_v001: _("")
+    # Sculpture-Garden_Looping: _("")
+    # The-Concrete-Bakes_Looping: _("")
+
+## SFX:
+    define knock = "audio/sfx/knock.mp3"
+    define clock = "audio/sfx/clock bell.mp3"
+    define heartbeat = "audio/sfx/heartbeat.mp3"
+    define gavel = Play("sound","sfx/gavel.mp3")
+    # Chest-Drawer_Close = "audio/sfx/Chest-Drawer_Close.mp3"
+    # Chest-Drawer_Open = "audio/sfx/Chest-Drawer_Open.mp3"
+    # Edge-of-Ocean = "audio/sfx/Edge-of-Ocean.mp3"
+    # Interior-Door_Close = "audio/sfx/Interior-Door_Close.mp3"
+
+#######other defs
+    define arguments_fulfilled = 0
+    default trialpoints = 0
+
+## SFX Caption:
+    # Chest-Drawer_Close: _("")
+    # Chest-Drawer_Open: _("")
+    # Edge-of-Ocean: _("")
+    # Interior-Door_Close: _("")
+
+## Script to redefine the images:
+## !!! DO NOT CHANGE THE CODE BELOW THIS POINT !!!
+init -1 python:
+
+    if redefine_resources:
+        with open(renpy.loader.transfn('definitions.rpy'), 'rb') as f:
+            s = f.read()
+        f.closed
+        pos = s.find('## Script to redefine the images')
+        if pos>1:
+            s=s[pos:]
+
+        with open(renpy.loader.transfn('definitions.rpy'), 'wb') as f:
+            f.write('## This is a resource name loader that will import the names of files from certain folders\n## Intended as a way to quickly grab file names to use in accessibility.rpy, screens.rpy, and captiontool.rpy\n## Remember to add commas to the end of each listed item\n## As of RenPy7, basic images do not have to be defined (LayeredImages still need to be set up)\r\ninit -1:\r\n    $ redefine_resources = False\n    ## When you add, delete or rename an image or music resource, change redefine_resources to True and launch the project\r\n\r\n')
+
+            f.write('## Sprites:\r\n')
+            for file in renpy.list_files():
+                if file.startswith('images/sprites') and (file.endswith('.png') or file.endswith('.webp')):
+                    name = file.replace('images/sprites/','').replace('/', ' ').replace('.png','').replace('.webp','')
+                    img_str = 'image ' + name + ' = "' + file + '"'
+                    f.write('    # ' + img_str + '\r\n')
+
+            f.write('## BGs:\r\n')
+            for file in renpy.list_files():
+                if file.startswith('images/BG/') and (file.endswith('.png') or file.endswith('.webp') or file.endswith('.jpg')):
+                    name = file.replace('images/BG/','').replace('/', ' ').replace('.png','').replace('.webp','').replace('.jpg','')
+                    img_str = 'image ' + name + ' = "' + file + '"'
+                    f.write('    # ' + img_str + '\r\n')
+
+            f.write('## CGs:\r\n')
+            for file in renpy.list_files():
+                if file.startswith('images/CG/') and (file.endswith('.png') or file.endswith('.webp') or file.endswith('.jpg')):
+                    name = file.replace('images/CG/','').replace('/', ' ').replace('.png','').replace('.webp','').replace('.jpg','')
+                    img_str = 'image ' + name + ' = "' + file + '"'
+                    f.write('    # ' + img_str + '\r\n')
+
+            f.write('\r\n## Music:\r\n# init -2 python:\r\n')
+            for file in renpy.list_files():
+                if file.startswith('audio/music/') and (file.endswith('.ogg') or file.endswith('.wav') or file.endswith('.mp3')):
+                    name = file.replace('audio/music/','').replace('/', ' ').replace('.ogg','').replace('.wav','').replace('.mp3','')
+                    my_str = name + ' = "' + file + '"'
+                    f.write('    # ' + my_str + '\r\n')
+
+            f.write('\r\n## Music Caption:\r\n')
+            for file in renpy.list_files():
+                if file.startswith('audio/music/') and (file.endswith('.ogg') or file.endswith('.wav') or file.endswith('.mp3')):
+                    name = file.replace('audio/music/','').replace('/', ' ').replace('.ogg','').replace('.wav','').replace('.mp3','')
+                    my_str = name + ' = "' + file + '"'
+                    f.write('    # ' + name + ': _("")' + '\r\n')
+
+            f.write('\r\n## SFX:\r\n')
+            for file in renpy.list_files():
+                if file.startswith('audio/sfx/') and (file.endswith('.ogg') or file.endswith('.wav') or file.endswith('.mp3')):
+                    name = file.replace('audio/sfx/','').replace('/', ' ').replace(' ', '_').replace('.ogg','').replace('.wav','').replace('.mp3','')
+                    my_str = name + ' = "' + file + '"'
+                    f.write('    # ' + my_str + '\r\n')
+
+            f.write('\r\n## SFX Caption:\r\n')
+            for file in renpy.list_files():
+                if file.startswith('audio/sfx/') and (file.endswith('.ogg') or file.endswith('.wav') or file.endswith('.mp3')):
+                    name = file.replace('audio/sfx/','').replace('/', ' ').replace(' ', '_').replace('.ogg','').replace('.wav','').replace('.mp3','')
+                    my_str = name + ' = "' + file + '"'
+                    f.write('    # ' + name + ': _("")' + '\r\n')
+            f.write('\r\n')
+        f.closed
+
+        with open(renpy.loader.transfn('definitions.rpy'), 'ab') as f:
+            f.write(s)
+        f.closed
+
