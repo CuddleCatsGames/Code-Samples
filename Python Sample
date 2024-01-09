@@ -1,0 +1,310 @@
+## Screen with Stats Button
+screen gameUI:
+    imagebutton:
+        xalign 1.0
+        yalign 0.0
+        xoffset -30
+        yoffset 30
+        idle "UI/mc_idle.png"
+        hover "UI/mc_hover.png"
+        action ShowMenu("StatsUI")
+
+## Stats UI
+screen StatsUI:
+    tag character_screen_tag
+    add "UI/bg peach.png"
+    hbox:
+        ## LEFT FRAME
+        frame:
+            ysize 1080
+            xsize 340
+            xalign 0.30
+            yalign 0.72
+            xpadding 30
+            ypadding 30
+            #Remove hashtag in the next lineto remove the black and blue background
+            # background None
+            hbox:
+                xalign 0.5
+                yalign 0.11
+                spacing 40
+
+                text "{b}Lover Stats{/b}" size 50
+
+            vbox:
+                xalign 0.5
+                yalign 0.6
+                label _("Friendship")
+                text ("%d points" %lover_friendship)
+                bar value lover_friendship range 100
+
+            vbox:
+                xalign 0.5
+                yalign 0.8
+                label _("Love")
+                text ("%d points" %lover_love)
+                bar value lover_love range 100
+
+            hbox:
+                xalign 0.5
+                yalign 0.3
+                spacing 40
+                # Text Column
+                vbox:
+                    spacing 10
+                    text "Corruption" size 40
+                    text "Trust" size 40
+                    text "Innocence" size 40
+
+                # Values Column
+                vbox:
+                    spacing 10
+                    text "[mccorruption]" size 40
+                    text "[mctrust]" size 40
+                    text "[mcinnocence]" size 40
+
+
+        ## RIGHT FRAME
+        frame:
+            background None
+            ysize 1080
+            xsize 1280
+            vbox:
+                xalign 0.7
+                xsize 800
+                xoffset -300
+                yoffset 100
+                spacing 20
+                ## Notice that we're using selectedCharacter to show the variables here.
+                text "Name: [lover.name] Dupont"
+                text "Age: [lover.age]"
+                text "Occupation: [lover.occupation]"
+                text "Birthday: [lover.birthday]"
+                text "Favorite Food: [lover.food]"
+                text "Favorite Flower: [lover.flower]"
+                text "Hobby: [lover.hobby]"
+                text "Dream: [lover.dream]"
+                text "Dream Destination: [lover.destination]"
+                text "Backstory: [lover.backstory]"
+
+            add lover.imageName xalign 1.5 yalign -5.0
+
+            imagebutton:
+                xalign 1.25
+                yalign 0.0
+                xoffset -30
+                yoffset 30
+                auto "UI/return_%s.png"
+                action Return()
+
+
+screen myStats:
+    imagebutton:
+        xalign 1.0
+        yalign 0.1
+        xoffset -30
+        yoffset 0
+        auto "UI/claude_%s.png"
+        action ShowMenu("My_Stats")
+
+#####Charscreen
+screen My_Stats():
+    tag character_screen_tag
+    add "UI/bg peach.png"
+    hbox:
+        ## LEFT FRAME
+        frame:
+            ysize 1080
+            xsize 340
+            xalign 0.30
+            yalign 0.72
+            xpadding 30
+            ypadding 30
+            #Remove hashtag in the next lineto remove the black and blue background
+            # background None
+            hbox:
+                xalign 0.5
+                yalign 0.11
+                spacing 40
+
+                text "{b}My Stats{/b}" size 50
+
+            vbox:
+                xalign 0.5
+                yalign 0.6
+                label _("Obsession")
+                text ("%d points" %obsession)
+                bar value obsession range 100
+
+            vbox:
+                xalign 0.5
+                yalign 0.8
+                label _("Hedonism")
+                text ("%d points" %hedonism)
+                bar value hedonism range 100
+
+            hbox:
+                xalign 0.5
+                yalign 0.3
+                spacing 40
+                # Text Column
+                vbox:
+                    spacing 10
+                    text "Morality" size 40
+                    text "Charm" size 40
+                    text "Intelligence" size 40
+                    text "Authority" size 40
+
+                # Values Column
+                vbox:
+                    spacing 10
+                    text "[morality]" size 40
+                    text "[charm]" size 40
+                    text "[intelligence]" size 40
+                    text "[authority]" size 40
+
+
+        ## RIGHT FRAME
+        frame:
+            background None
+            ysize 1080
+            xsize 1280
+            vbox:
+                xalign 0.7
+                xsize 800
+                xoffset -300
+                yoffset 100
+                spacing 20
+                ## Notice that we're using selectedCharacter to show the variables here.
+                text "Name: [claude.name]"
+                text "Age: [claude.age]"
+                text "Occupation: [claude.occupation]"
+                text "Personality: [claude.personality]"
+                text "Backstory: [claude.backstory]"
+
+            add claude.imageName xalign 2.0 yalign -0.3
+
+            imagebutton:
+                xalign 1.25
+                yalign 0.0
+                xoffset -30
+                yoffset 30
+                auto "UI/return_%s.png"
+                action Return()
+
+style character_button_text:
+    xalign 0.5
+
+
+## Screen with Stats Button
+screen mainmapUI:
+    imagebutton:
+        xalign 0.05
+        yalign 0.0
+        xoffset -30
+        yoffset 30
+        auto "UI/map_%s.png"
+        action ShowMenu("MapUI")
+        # You may also use the code below depending on your needs.
+        # action ShowMenu("mapUI")
+        # This was the same code used in the vlog.
+
+# If you just want to show a map that does nothing more than just an indicator, it's good to use ShowMenu.
+# If you want to navigate using the map, it's prefered to use "call".
+# When in skip mode (tab key on keyboard), this prevents the game to be skipped
+
+screen MapUI:
+    add "map/map.png"
+
+    imagebutton:
+        xpos 422
+        ypos 222
+        idle "map/manor_idle.png"
+        hover "map/manor_hover.png"
+        action Jump("manor_pressed")
+
+    imagebutton:
+        xalign 1.0
+        yalign 0.0
+        xoffset -30
+        yoffset 30
+        auto "UI/return_%s.png"
+        action Return()
+
+
+screen workUI:
+    imagebutton:
+        xalign 1.0
+        yalign 0.14
+        xoffset -30
+        yoffset 30
+        idle "UI/work_idle.png"
+        hover "UI/work_hover.png"
+        action ShowMenu("book_")
+
+screen book_():
+    default bookpage = 0
+    zorder 1
+    modal True
+    frame:
+        align (0.5, 0.5)
+        xysize(1000, 1000)
+
+        vbox:
+            xalign 0.15
+            yalign 0.25
+            spacing 15
+
+            if bookpage == 0:
+                text "{b}[case1.casenumber]{/b}"
+                text "Case Name: [case1.casename]"
+                text "Suspect: [case1.suspect]"
+                text "Victim:[case1.victim]"
+                text "Evidence 1: [case1.evidence1]"
+                text "Evidence 2: [case1.evidence2]"
+                text "Evidence 3: [case1.evidence3]"
+                text "Witness 1: [case1.witness1]"
+                text "Witness 2: [case1.witness2]"
+            elif bookpage == 1:
+                xalign 0.5
+                text "Information: [case1.info1]"
+                text "More: [case1.info2]"
+                text "More: [case1.info3]"
+            elif bookpage == 2:
+                text "{b}[case2.casenumber]{/b}"
+                text "Case to be filed"
+            elif bookpage == 3:
+                text "Case to be filed"
+            elif bookpage == 4:
+                text "{b}[case3.casenumber]{/b}"
+                text "Case to be filed"
+            elif bookpage == 5:
+                text "Case to be filed"
+            elif bookpage == 6:
+                text "{b}[case4.casenumber]{/b}"
+                text "Case to be filed"
+            elif bookpage == 7:
+                text "Case to be filed"
+            elif bookpage == 8:
+                text "{b}[case5.casenumber]{/b}"
+                text "Case to be filed"
+            elif bookpage == 9:
+                text "Case to be filed"
+            elif bookpage == 10:
+                text "Case to be filed"
+            else:
+                text "Case to be filed"  # Add the content for page 3 here.
+                # Add more 'elif' blocks for additional pages if needed.
+
+    imagebutton:
+        xalign 1.0
+        yalign 0.0
+        xoffset -30
+        yoffset 30
+        auto "UI/return_%s.png"
+        action Return()
+
+    hbox:
+        align (0.5, 0.85)
+        textbutton "Previous" action SetScreenVariable("bookpage", max(0, bookpage - 1))
+        textbutton "Next" action SetScreenVariable("bookpage", min(10, bookpage + 1))
